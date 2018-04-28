@@ -7,15 +7,30 @@ public class Menu {
         // Get tree
         GenericTree<String> tree = buildTree();
 
-        List<Node<String>> traversalResult = tree.getAllElements(tree.getRoot());
+        // Full traversal of the tree
+        List<Node<String>> oldTraversalResult = tree.getAllElements(tree.getRoot());
 
-        for(Node<String> node : traversalResult) {
+        System.out.print("\nOriginal List:\t");
+        for(Node<String> node : oldTraversalResult) {
+            System.out.print(node.toString());
+            System.out.print(';');
+        }
+
+        // Add the restrictions list and then fully iterate
+        ArrayList<String> restrictionsList = new ArrayList<String>();
+        restrictionsList.add("Cheese");
+
+        List<Node<String>> newTraversalResult = tree.getAllElements(tree.getRoot(), restrictionsList);
+
+        System.out.print("\n\nNew List with Restrictions:\t");
+
+        for(Node<String> node : newTraversalResult) {
             System.out.print(node.toString());
             System.out.print(';');
         }
     }
 
-    public static GenericTree<String> buildTree() {
+    private static GenericTree<String> buildTree() {
         GenericTree<String> tree = new GenericTree<String>();
 
         Node<String> root = new Node<String>("Menu");
@@ -31,6 +46,9 @@ public class Menu {
         Node<String> blueCheese = new Node<String>("Blue Cheese");
         Node<String> provoloneCheese = new Node<String>("Provolone");
 
+        Node<String> grains = new Node<String>("Grains");
+        Node<String> eggs = new Node<String>("Eggs");
+
         tree.setRoot(root);
 
         root.addChild(dairy);
@@ -44,6 +62,20 @@ public class Menu {
         cheese.addChild(blueCheese);
         cheese.addChild(provoloneCheese);
 
+        produce.addChild(grains);
+        produce.addChild(eggs);
+
         return tree;
     }
 }
+
+/**
+ *
+ * OUTPUT -
+ *
+ * Original List:	Cheddar;Blue Cheese;Provolone;Cheese;Cream;Milk;Dairy;Grains;Eggs;Produce;Menu;
+ *
+ * New List with Restrictions:	Cream;Milk;Dairy;Grains;Eggs;Produce;Menu;
+ *
+ *
+ * */

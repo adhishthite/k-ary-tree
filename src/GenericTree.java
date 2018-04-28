@@ -76,7 +76,18 @@ public class GenericTree<T> {
     private void buildPreOrder(Node<T> node, List<Node<T>> traversalResult) {
 
         for(Node<T> child : node.getChildren()) {
+
             buildPreOrder(child, traversalResult);
+        }
+
+        traversalResult.add(node);
+    }
+
+    private void buildPreOrder(Node<T> node, List<Node<T>> traversalResult, ArrayList<String> restrictionsList) {
+        for(Node<T> child : node.getChildren()) {
+            if(!restrictionsList.contains(child.toString())){
+                buildPreOrder(child, traversalResult, restrictionsList);
+            }
         }
 
         traversalResult.add(node);
@@ -87,6 +98,14 @@ public class GenericTree<T> {
         List<Node<T>> traversalResult = new ArrayList<Node<T>>();
 
         buildPreOrder(node, traversalResult);
+
+        return traversalResult;
+    }
+
+    public List<Node<T>> getAllElements(Node<T> node, ArrayList<String> restrictionsList) {
+        List<Node<T>> traversalResult = new ArrayList<Node<T>>();
+
+        buildPreOrder(node, traversalResult, restrictionsList);
 
         return traversalResult;
     }
